@@ -7,7 +7,95 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var expressHbs = require('express-handlebars');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const Handlebars = require('handlebars');
+
 var app = express();
+
+const hbs = expressHbs.create({
+  defaultLayout: 'layout',
+  extname: '.hbs',
+  handlebars: allowInsecurePrototypeAccess(Handlebars),
+  //create custom helpers
+  helpers: {
+    ifEquals: function (arg1, arg2, options) {
+      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    },
+    ifCond: function (v1, operator, v2, options) {
+      switch (operator) {
+        case '==':
+          return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+          return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '!=':
+          return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        case '!==':
+          return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+          return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+          return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+          return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+          return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+          return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+          return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        default:
+          return options.inverse(this);
+      }
+    },
+    section: function (name, options) {
+      if (!this._sections) this._sections = {};
+      this._sections[name] = options.fn(this);
+      return null;
+    },
+    lazyEach: function(context, options) {
+      var fn = options.fn;
+      var i = 0, ret = "", data;
+  
+      if (Handlebars.Utils.isFunction(context)) { context = context.call(this); }
+  
+      if (options.data) {
+          data = Handlebars.createFrame(options.data);
+          //console.log(data)
+      }
+  
+      if(context && typeof context === 'object') {
+          if (Handlebars.Utils.isArray(context)) {
+            console.log(context.length)
+  
+              var loop = function() {
+  
+                  for(var j = context.length; i<j; i++) {
+                      if (data) {
+                          data.index = i;
+                          data.first = (i === 0);
+                          data.last  = (i === (context.length-1));
+                      }
+                      ret = ret + fn(context[i], { data: data });
+                      //console.log(ret)
+  
+                      if (i % 5 == 0) {
+                          i++;
+                          setTimeout(loop, 1);
+                          break;
+                      }
+                  }
+              }
+              loop();
+          }
+      }
+      return ret;
+  }
+  }
+})
+
+// view engine setup
+app.engine('.hbs', hbs.engine);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,7 +126,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-port = 3000
+port = 5000
 app.listen(port, function (err) {
   if (err) {
     console.log(err)
