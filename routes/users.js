@@ -10,6 +10,11 @@ router.get('/signup', function(req, res, next) {
   res.render('user/signup');
 });
 
+
+router.get('/profile', function(req, res, next) {
+  res.render('user/profile');
+});
+
 router.get('/dashboard', function(req, res, next) {
   res.render('user/dashboard');
 });
