@@ -3,6 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+const compression = require('compression')
+require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,6 +17,10 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 const Handlebars = require('handlebars');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/tcp', { useNewUrlParser: true, useUnifiedTopology: true })
+//mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true, useUnifiedTopology: true})
+
 
 const hbs = expressHbs.create({
   defaultLayout: 'layout',
@@ -53,44 +62,44 @@ const hbs = expressHbs.create({
       this._sections[name] = options.fn(this);
       return null;
     },
-    lazyEach: function(context, options) {
+    lazyEach: function (context, options) {
       var fn = options.fn;
       var i = 0, ret = "", data;
-  
+
       if (Handlebars.Utils.isFunction(context)) { context = context.call(this); }
-  
+
       if (options.data) {
-          data = Handlebars.createFrame(options.data);
-          //console.log(data)
+        data = Handlebars.createFrame(options.data);
+        //console.log(data)
       }
-  
-      if(context && typeof context === 'object') {
-          if (Handlebars.Utils.isArray(context)) {
-            console.log(context.length)
-  
-              var loop = function() {
-  
-                  for(var j = context.length; i<j; i++) {
-                      if (data) {
-                          data.index = i;
-                          data.first = (i === 0);
-                          data.last  = (i === (context.length-1));
-                      }
-                      ret = ret + fn(context[i], { data: data });
-                      //console.log(ret)
-  
-                      if (i % 5 == 0) {
-                          i++;
-                          setTimeout(loop, 1);
-                          break;
-                      }
-                  }
+
+      if (context && typeof context === 'object') {
+        if (Handlebars.Utils.isArray(context)) {
+          console.log(context.length)
+
+          var loop = function () {
+
+            for (var j = context.length; i < j; i++) {
+              if (data) {
+                data.index = i;
+                data.first = (i === 0);
+                data.last = (i === (context.length - 1));
               }
-              loop();
+              ret = ret + fn(context[i], { data: data });
+              //console.log(ret)
+
+              if (i % 5 == 0) {
+                i++;
+                setTimeout(loop, 1);
+                break;
+              }
+            }
           }
+          loop();
+        }
       }
       return ret;
-  }
+    }
   }
 })
 
@@ -107,16 +116,31 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'mysupersecret',
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  cookie: { maxAge: 60 * 60 * 24 * 5 * 1000 }
+}));
+
+app.use(function (req, res, next) {
+  res.locals.session = req.session;
+  next();
+});
+
+app.use(compression())
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

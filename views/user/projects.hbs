@@ -1,9 +1,9 @@
 <div class="g-sidenav-show  bg-gray-100">
 
-    {{> dash-sidenav}}
+    {{> dash-sidenav title="projects"}}
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
-        {{> dash-header}}
+        {{> dash-header title="projects"}}
         <!-- End Navbar -->
         <div class="container-fluid py-4">
 
@@ -11,14 +11,61 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Projects</h6>
-                            <div class="text-end">
-                                <div class="dropdown float-lg-end pe-4">
-                                    <a class="cursor-pointer">
-                                        <i class="fa fa-plus text-secondary"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            <h6>Projects
+                                <span class="float-lg-end pe-4">
+                                    <button type="button" class="btn btn-block bg-gradient-warning mb-3"
+                                        data-bs-toggle="modal" data-bs-target="#modal-form"><i
+                                            class="fa fa-plus text-white"></i></button>
+
+                                    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog"
+                                        aria-labelledby="modal-form" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body p-0">
+                                                    <div class="card card-plain">
+                                                        <div class="card-header pb-0 text-left">
+                                                            <h3 class="font-weight-bolder text-info text-gradient">
+                                                                Add a project</h3>
+                                                            <p class="mb-0">Enter the details of your project
+                                                            </p>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form role="form text-left" method="POST"
+                                                                action="../users/createProject">
+                                                                <label>Project Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Project Name" name="projectName">
+                                                                </div>
+                                                                <label>Project Description</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Overview" name="overview">
+                                                                </div>
+                                                                <label>Budget in $</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Budget" name="budget">
+                                                                </div>
+                                                                <label>Due Date</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="date" class="form-control"
+                                                                        placeholder="Due Date" name="dueDate">
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="submit"
+                                                                        class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Create
+                                                                        Project</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -41,68 +88,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{#each projects as |project i|}}
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-spotify.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                                                    </div>
                                                     <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Spotify</h6>
+                                                        <h6 class="mb-0 text-sm">{{project.projectName}}</h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">$2,500</p>
+                                                <p class="text-sm font-weight-bold mb-0">${{project.budget}}</p>
                                             </td>
                                             <td>
-                                                <span class="text-xs font-weight-bold">working</span>
+                                                <span class="text-xs font-weight-bold">{{project.status}}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">60%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-info"
-                                                                role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width: 60%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-invision.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Invision</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">done</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">100%</span>
+                                                    <span
+                                                        class="me-2 text-xs font-weight-bold">{{project.completion}}</span>
                                                     <div>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-gradient-success"
-                                                                role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width: 100%;"></div>
+                                                                role="progressbar"
+                                                                aria-valuenow="{{project.completion}}" aria-valuemin="0"
+                                                                aria-valuemax="100"
+                                                                style="width: {{project.completion}}%;"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -110,160 +121,13 @@
                                             <td class="align-middle">
                                                 <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
                                                     aria-expanded="false">
-                                                    <a href="/users/projectDetails"><i
+                                                    <a href="/users/projectDetails/{{project._id}}/0"><i
                                                             class="fa fa-info-circle text-xs"></i></a>
 
                                                 </button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-jira.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Jira</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">canceled</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">30%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-danger"
-                                                                role="progressbar" aria-valuenow="30" aria-valuemin="0"
-                                                                aria-valuemax="30" style="width: 30%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-slack.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Slack</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">canceled</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">0%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-success"
-                                                                role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                                                aria-valuemax="0" style="width: 0%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-webdev.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Webdev</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">working</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">80%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-info"
-                                                                role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                                                                aria-valuemax="80" style="width: 80%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-xd.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Adobe XD</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">done</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">100%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-success"
-                                                                role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width: 100%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        {{/each}}
                                     </tbody>
                                 </table>
                             </div>

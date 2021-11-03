@@ -65,8 +65,8 @@
                                         <a href="/" class="dropdown-item border-radius-md">
                                             <span class="ps-3">Home</span>
                                         </a>
-                                        <a href="/users/dashboard" class="dropdown-item border-radius-md">
-                                            <span class="ps-3">Dashboard</span>
+                                        <a href="/users/projects" class="dropdown-item border-radius-md">
+                                            <span class="ps-3">Projects</span>
                                         </a>
                                         <h6
                                             class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center px-0 mt-3">
@@ -98,12 +98,19 @@
                                             </div>
                                             Account
                                         </h6>
+                                        {{#if this.session.user}}
+                                        <a href="/users/profile" class="dropdown-item border-radius-md">
+                                            <span class="ps-3">Profile</span>
+                                        </a>
+                                        {{else}}
                                         <a href="/users/login" class="dropdown-item border-radius-md">
                                             <span class="ps-3">Sign In</span>
                                         </a>
                                         <a href="/users/signup" class="dropdown-item border-radius-md">
                                             <span class="ps-3">Sign Up</span>
                                         </a>
+                                        {{/if}}
+
                                     </div>
                                     <div class="d-lg-none">
                                         <h6
@@ -190,7 +197,8 @@
                                 </a>
                             </li>
                             <li class="nav-item my-auto ms-3 ms-lg-0">
-                                <a href="/users/login" class="btn btn-sm  bg-white  btn-round mb-0 me-1 mt-2 mt-md-0">Log In</a>
+                                <a href="/users/login"
+                                    class="btn btn-sm  bg-white  btn-round mb-0 me-1 mt-2 mt-md-0">Log In</a>
                             </li>
                         </ul>
                     </div>

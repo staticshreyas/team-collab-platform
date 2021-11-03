@@ -1,8 +1,8 @@
 <div class="g-sidenav-show bg-gray-100">
-    {{> dash-sidenav}}
+    {{> dash-sidenav title="profile"}}
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <!-- Navbar -->
-        {{> dash-header}}
+        {{> dash-header title="profile"}}
         <!-- End Navbar -->
         <div class="container-fluid">
             <div class="page-header min-height-300 border-radius-xl mt-4"
@@ -13,16 +13,16 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="/img/me.jpeg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                            <img src={{src}} alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                                Shreyas More
+                                {{name}}
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                CEO / Co-Founder
+                                {{designation}}
                             </p>
                         </div>
                     </div>
@@ -48,36 +48,23 @@
                         </div>
                         <div class="card-body p-3">
                             <p class="text-sm">
-                                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally
-                                difficult paths, choose the one more painful in the short term (pain avoidance is
-                                creating an illusion of equality).
+                                {{bio}}
                             </p>
                             <hr class="horizontal gray-light my-4">
                             <ul class="list-group">
-                                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full
-                                        Name:</strong> &nbsp; Alec M. Thompson</li>
+                                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">
+                                        Name:</strong> &nbsp; {{name}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                        class="text-dark">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
+                                        class="text-dark">Mobile:</strong> &nbsp; {{phone}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                        class="text-dark">Email:</strong> &nbsp; alecthompson@mail.com</li>
+                                        class="text-dark">Email:</strong> &nbsp; {{email}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                        class="text-dark">Location:</strong> &nbsp; USA</li>
-                                <li class="list-group-item border-0 ps-0 pb-0">
-                                    <strong class="text-dark text-sm">Social:</strong> &nbsp;
-                                    <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-facebook fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-twitter fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-instagram fa-lg"></i>
-                                    </a>
-                                </li>
+                                        class="text-dark">Location:</strong> &nbsp; {{location}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-12 col-xl-8">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
@@ -104,68 +91,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{#each projects as |project i|}}
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-spotify.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                                                    </div>
                                                     <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Spotify</h6>
+                                                        <h6 class="mb-0 text-sm">{{project.projectName}}</h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">$2,500</p>
+                                                <p class="text-sm font-weight-bold mb-0">${{project.budget}}</p>
                                             </td>
                                             <td>
-                                                <span class="text-xs font-weight-bold">working</span>
+                                                <span class="text-xs font-weight-bold">{{project.status}}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">60%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-info"
-                                                                role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width: 60%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-invision.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Invision</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">done</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">100%</span>
+                                                    <span class="me-2 text-xs font-weight-bold">{{project.completion}}</span>
                                                     <div>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-gradient-success"
-                                                                role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width: 100%;"></div>
+                                                                role="progressbar" aria-valuenow="{{project.completion}}" aria-valuemin="0"
+                                                                aria-valuemax="100" style="width: {{project.completion}}%;"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,160 +121,13 @@
                                             <td class="align-middle">
                                                 <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
                                                     aria-expanded="false">
-                                                    <a href="/users/projectDetails"><i
+                                                    <a href="/users/projectDetails/{{project._id}}/0"><i
                                                             class="fa fa-info-circle text-xs"></i></a>
 
                                                 </button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-jira.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Jira</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">canceled</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">30%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-danger"
-                                                                role="progressbar" aria-valuenow="30" aria-valuemin="0"
-                                                                aria-valuemax="30" style="width: 30%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-slack.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Slack</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">canceled</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">0%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-success"
-                                                                role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                                                aria-valuemax="0" style="width: 0%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-webdev.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Webdev</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">working</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">80%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-info"
-                                                                role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                                                                aria-valuemax="80" style="width: 80%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div>
-                                                        <img src="/img/small-logos/logo-xd.svg"
-                                                            class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                                                    </div>
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">Adobe XD</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                                            </td>
-                                            <td>
-                                                <span class="text-xs font-weight-bold">done</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">100%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-success"
-                                                                role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                                                aria-valuemax="100" style="width: 100%;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fa fa-info-circle text-xs"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        {{/each}}
                                     </tbody>
                                 </table>
                             </div>

@@ -6,31 +6,55 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                        <div class="card card-plain">
+                        <div class="card">
                             <div class="card-header pb-0 text-left">
                                 <h4 class="font-weight-bolder">Sign Up</h4>
                                 <p class="mb-0">Enter your details</p>
+                                {{#if Error}}<div class="alert alert-danger" role="alert">{{Error}}</div>{{/if}}
                             </div>
                             <div class="card-body">
-                                <form role="form">
+                                <form action="../users/signup" method="post">
+                                    <div class="mb-3">
+                                        <input type="textarea" class="form-control form-control-lg" placeholder="Name"
+                                            aria-label="Name" aria-describedby="name-addon" name="name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control form-control-lg" placeholder="Phone"
+                                            aria-label="Phone" aria-describedby="phone-addon" name="phone">
+                                    </div>
                                     <div class="mb-3">
                                         <input type="email" class="form-control form-control-lg" placeholder="Email"
-                                            aria-label="Email" aria-describedby="email-addon">
+                                            aria-label="Email" aria-describedby="email-addon" name="email">
                                     </div>
                                     <div class="mb-3">
-                                        <input type="email" class="form-control form-control-lg" placeholder="Password"
-                                            aria-label="Password" aria-describedby="password-addon">
+                                        <input type="password" class="form-control form-control-lg"
+                                            placeholder="Password" aria-label="Password"
+                                            aria-describedby="password-addon" name="password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="textarea" class="form-control form-control-lg" placeholder="Bio"
+                                            aria-label="Bio" aria-describedby="bio-addon" name="bio">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="textarea" class="form-control form-control-lg"
+                                            placeholder="Location" aria-label="Location" aria-describedby="loc-addon"
+                                            name="location">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="textarea" class="form-control form-control-lg"
+                                            placeholder="Designation" aria-label="Designation" aria-describedby="designation-addon"
+                                            name="designation">
                                     </div>
                                     <div class="text-center">
-                                        <button type="button"
+                                        <button type="submit"
                                             class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign
-                                            in</button>
+                                            Up</button>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                 <p class="mb-4 text-sm mx-auto">
-                                    Don't have an account?
+                                    Have an account?
                                     <a href="/users/signin" class="text-primary text-gradient font-weight-bold">Sign
                                         in</a>
                                 </p>
