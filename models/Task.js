@@ -28,6 +28,9 @@ const TaskSchema = new Schema({
   }],
   taskStatus:{
       type:String
-  }
+  },
+  taskOwner:{
+    type:String
+}
 });
 module.exports = Task = mongoose.model("tasks", TaskSchema);

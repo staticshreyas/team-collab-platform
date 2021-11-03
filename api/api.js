@@ -42,13 +42,13 @@ async function projectDetails(projectId) {
     var project = await projectModel.findById(projectId)
 
     var ob = projectTasks(projectId);
-    if (tasks) {
+    if (ob) {
         var tasks = await ob;
 
         var numberOfTasks = tasks.length;
 
         var completedTasks = await taskModel.find({ 'taskStatus': 'Complete' })
-        console.log(tasks)
+        //console.log(tasks)
         var completion = (completedTasks.length / numberOfTasks) * 100;
 
         if (completion >= 100) {
@@ -77,7 +77,7 @@ async function projectTasks(projectId) {
         var task = ob.task
         allTasks.push(task)
     }
-    
+
     return allTasks;
 }
 

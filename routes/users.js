@@ -317,7 +317,12 @@ router.get('/projectDetails/:id/:error', function (req, res, next) {
       var obj = api.projectDetails(projectId)
       obj.then(project => {
         //console.log(project)
-        res.render('user/projectDetails', { project: project.project, error: error });
+        var proOb = api.projectTasks(projectId)
+        proOb.then(tasks => {
+          var pOId=user.uid
+          //console.log(tasks[0].taskOwner == pOId)
+          res.render('user/projectDetails', { project: project.project, error: error, tasks:tasks, pOId:pOId });
+        })
       })
 
     })
@@ -359,16 +364,24 @@ router.post('/addTeamMember', async function (req, res, next) {
 
 router.post('/addProjectTask', async function (req, res, next) {
   var taskName = req.body.taskName;
+  var taskOwner=req.body.taskOwner;
   var projectId = req.body.hiddenpId;
   var dateDue = req.body.taskDue;
-  var assignee = req.body.assignee;
+  var Assignee = req.body.assignee;
+  var assignee = []
+  if (!Array.isArray(Assignee)) {
+    assignee.push(Assignee)
+  } else {
+    assignee = Assignee
+  }
   var taskStatus = req.body.taskStatus;
 
   var newTask = {
     project: projectId,
     taskName: taskName,
     dateDue: dateDue,
-    taskStatus: taskStatus
+    taskStatus: taskStatus,
+    taskOwner: taskOwner
   }
   await taskModel.create(newTask, (err, item) => {
     if (err) {
@@ -379,7 +392,6 @@ router.post('/addProjectTask', async function (req, res, next) {
 
         assignee.forEach(userId => {
           userRef.where('uid', '==', userId).get().then(async snap => {
-            var USERS = []
             snap.forEach(async user => {
               var user = user.data()
               var project = await projectModel.findOne({ _id: mongoose.Types.ObjectId(projectId) })
@@ -403,4 +415,13 @@ router.post('/addProjectTask', async function (req, res, next) {
   res.redirect('/users/projectDetails/' + projectId + '/' + 0)
 })
 
+router.post('/changeTaskStatus', async function(req,res,next){
+  var taskStatus=req.body.taskStatus
+  var projectId=req.body.hiddenpId
+  projectId=projectId.toString()
+  var taskId=req.body.taskId
+
+  await taskModel.findOneAndUpdate({_id:taskId}, {taskStatus:taskStatus}, {new:true})
+  res.redirect('/users/projectDetails/' + projectId + '/' + 0)
+})
 module.exports = router;
