@@ -36,6 +36,14 @@
 *::after {
   box-sizing: border-box; }
 
+  .center {
+    text-align:center;
+    width:100%;
+}
+.mr-0 {
+  margin-right: 0;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth; } }
