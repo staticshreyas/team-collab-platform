@@ -105,3 +105,5 @@ dist
 
 serviceAccountKey.json
 fireBaseConfig.json
+
+data/
