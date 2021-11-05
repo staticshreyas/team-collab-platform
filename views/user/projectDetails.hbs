@@ -246,46 +246,46 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{#each tasks}}
+                                        {{#each tasks as |task i|}}
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{this.taskName}}</h6>
+                                                        <h6 class="mb-0 text-sm">{{task.taskName}}</h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="avatar-group mt-2">
-                                                    {{#each this.assignee}}
+                                                    {{#each task.assignee as |assign i|}}
                                                     <a href="javascript:;" class="avatar avatar-xs rounded-circle"
                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                        title="{{this.name}}">
-                                                        <img src="{{this.src}}" alt="team1">
+                                                        title="{{assign.name}}">
+                                                        <img src="{{assign.src}}" alt="team1">
                                                     </a>
                                                     {{/each}}
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold"> {{this.dateDue}}</span>
+                                                <span class="text-xs font-weight-bold"> {{task.dateDue}}</span>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <div class="progress-wrapper w-75 mx-auto">
                                                     
-                                                    {{#ifCond this.taskOwner '==' ../pOId}}
+                                                    {{#ifCond task.taskOwner '==' ../pOId}}
 
-                                                    {{#ifCond this.taskStatus '==' "Complete"}}
+                                                    {{#ifCond task.taskStatus '==' "Complete"}}
                                                     <button type="button" class="btn bg-gradient-success btn-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-form3"><span
-                                                            class="text-xs font-weight-bold"> {{this.taskStatus}} 
+                                                        data-bs-toggle="modal" data-bs-target="#modal-form{{task.id}}"><span
+                                                            class="text-xs font-weight-bold"> {{task.taskStatus}} 
                                                         </span></button>
                                                     {{else}}
                                                     <button type="button" class="btn bg-gradient-warning btn-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-form3"><span
-                                                            class="text-xs font-weight-bold"> {{this.taskStatus}}
+                                                        data-bs-toggle="modal" data-bs-target="#modal-form{{task.id}}"><span
+                                                            class="text-xs font-weight-bold"> {{task.taskStatus}}
                                                         </span></button>
                                                     {{/ifCond}}
-                                                    <div class="modal fade" id="modal-form3" tabindex="-1" role="dialog"
+                                                    <div class="modal fade" id="modal-form{{task.id}}" tabindex="-1" role="dialog"
                                                         aria-labelledby="modal-form3" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered modal-sm"
                                                             role="document">
@@ -313,7 +313,7 @@
                                                                                 <input type="hidden" name="hiddenpId"
                                                                                     value={{project._id}}>
                                                                                 <input type="hidden" name="taskId"
-                                                                                    value={{this.id}}>
+                                                                                    value={{task._id}}>
                                                                                 <div class="text-center">
                                                                                     <button type="submit"
                                                                                         class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Submit</button>
@@ -327,13 +327,13 @@
                                                     </div>
 
                                                     {{else}}
-                                                    {{#ifCond this.taskStatus '==' "Complete"}}
+                                                    {{#ifCond task.taskStatus '==' "Complete"}}
                                                     <button type="button" class="btn bg-gradient-success btn-sm"><span
-                                                            class="text-xs font-weight-bold"> {{this.taskStatus}}
+                                                            class="text-xs font-weight-bold"> {{task.taskStatus}}
                                                         </span></button>
                                                     {{else}}
                                                     <button type="button" class="btn bg-gradient-warning btn-sm"><span
-                                                            class="text-xs font-weight-bold"> {{this.taskStatus}}
+                                                            class="text-xs font-weight-bold"> {{task.taskStatus}}
                                                         </span></button>
                                                     {{/ifCond}}
                                                     {{/ifCond}}
