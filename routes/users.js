@@ -419,8 +419,8 @@ router.post('/changeTaskStatus', async function(req,res,next){
   var taskStatus=req.body.taskStatus
   var projectId=req.body.hiddenpId
   projectId=projectId.toString()
-  var taskId=req.body.taskId
-
+  var taskId=mongoose.Types.ObjectId(req.body.taskId)
+    console.log(taskId)
   await taskModel.findOneAndUpdate({_id:taskId}, {taskStatus:taskStatus}, {new:true})
   res.redirect('/users/projectDetails/' + projectId + '/' + 0)
 })
